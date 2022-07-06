@@ -26,16 +26,31 @@ import org.springframework.kafka.listener.ContainerProperties;
 public class KafkaConfig {
     private final KafkaProperties kafkaProperties;
 
+    /**
+     * 使用生产工厂创建的实例
+     *
+     * @return
+     */
     @Bean
     public KafkaTemplate<String, String> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
 
+    /**
+     * 生产工厂
+     *
+     * @return
+     */
     @Bean
     public ProducerFactory<String, String> producerFactory() {
         return new DefaultKafkaProducerFactory<>(kafkaProperties.buildProducerProperties());
     }
 
+    /**
+     * 消费监听
+     *
+     * @return
+     */
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
@@ -46,6 +61,11 @@ public class KafkaConfig {
         return factory;
     }
 
+    /**
+     * 消费工厂
+     *
+     * @return
+     */
     @Bean
     public ConsumerFactory<String, String> consumerFactory() {
         return new DefaultKafkaConsumerFactory<>(kafkaProperties.buildConsumerProperties());
