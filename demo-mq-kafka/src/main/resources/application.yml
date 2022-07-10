@@ -6,6 +6,9 @@ spring:
   kafka:
     bootstrap-servers: localhost:9092
     producer:
+      # 所有副本都要接收到消息
+      acks: all
+      # 重试次数
       retries: 0
       batch-size: 16384
       buffer-memory: 33554432

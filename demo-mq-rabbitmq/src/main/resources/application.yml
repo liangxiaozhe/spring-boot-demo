@@ -11,6 +11,7 @@ spring:
     virtual-host: /
     # 手动提交消息
     listener:
+      # 两个类型的区别
       simple:
         acknowledge-mode: manual
       direct:

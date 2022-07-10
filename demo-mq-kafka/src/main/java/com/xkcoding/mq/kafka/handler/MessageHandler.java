@@ -31,4 +31,18 @@ public class MessageHandler {
             acknowledgment.acknowledge();
         }
     }
+
+    @KafkaListener(topics = "test2", topicPattern = "0", containerFactory = "ackContainerFactory")
+    // @KafkaListener(topicPartitions = {@TopicPartition(topic = "test2", partitions = "0")}, containerFactory = "ackContainerFactory")
+    public void handleMessage2(ConsumerRecord record, Acknowledgment acknowledgment) {
+        try {
+            String message = (String) record.value();
+            log.info("收到消息: {}", message);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        } finally {
+            // 手动提交 offset
+            acknowledgment.acknowledge();
+        }
+    }
 }
